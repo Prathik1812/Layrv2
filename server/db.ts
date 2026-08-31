@@ -23,7 +23,13 @@ export async function getDb() {
   if (!_db && url) {
     try {
       if (url.startsWith("postgres://") || url.startsWith("postgresql://")) {
-        const client = postgres(url, { prepare: false, ssl: { rejectUnauthorized: false } });
+        const client = postgres(url, {
+          prepare: false,
+          ssl: { rejectUnauthorized: false },
+          max: 1,
+          connect_timeout: 5,
+          idle_timeout: 10,
+        });
         _db = drizzlePostgres(client);
       } else {
         _db = drizzleMysql(url);
