@@ -139,19 +139,37 @@ export async function consumeAuthRateLimit(input: { bucket: string; keyHash: str
   const db = await requireDb();
   const now = new Date();
   const windowStart = new Date(now.getTime() - input.windowMs);
-  await db.insert(authRateLimits).values({
-    bucket: input.bucket,
-    keyHash: input.keyHash,
-    windowStartedAt: now,
-    attemptCount: 1,
-  }).onDuplicateKeyUpdate({ set: {
-    attemptCount: sql`IF(${authRateLimits.windowStartedAt} < ${windowStart}, 1, ${authRateLimits.attemptCount} + 1)`,
-    windowStartedAt: sql`IF(${authRateLimits.windowStartedAt} < ${windowStart}, ${now}, ${authRateLimits.windowStartedAt})`,
-  } });
-  const records = await db.select().from(authRateLimits)
+
+  const existing = await db.select().from(authRateLimits)
     .where(and(eq(authRateLimits.bucket, input.bucket), eq(authRateLimits.keyHash, input.keyHash)))
     .limit(1);
-  const record = records[0];
+
+  let record = existing[0];
+  if (!record) {
+    try {
+      await db.insert(authRateLimits).values({
+        bucket: input.bucket,
+        keyHash: input.keyHash,
+        windowStartedAt: now,
+        attemptCount: 1,
+      });
+      record = { bucket: input.bucket, keyHash: input.keyHash, windowStartedAt: now, attemptCount: 1 };
+    } catch {
+      const records = await db.select().from(authRateLimits)
+        .where(and(eq(authRateLimits.bucket, input.bucket), eq(authRateLimits.keyHash, input.keyHash)))
+        .limit(1);
+      record = records[0];
+    }
+  } else {
+    const expired = record.windowStartedAt < windowStart;
+    const newCount = expired ? 1 : record.attemptCount + 1;
+    const newWindowStartedAt = expired ? now : record.windowStartedAt;
+    await db.update(authRateLimits)
+      .set({ attemptCount: newCount, windowStartedAt: newWindowStartedAt })
+      .where(and(eq(authRateLimits.bucket, input.bucket), eq(authRateLimits.keyHash, input.keyHash)));
+    record = { ...record, attemptCount: newCount, windowStartedAt: newWindowStartedAt };
+  }
+
   const retryAfterMs = record && record.attemptCount > input.limit
     ? Math.max(0, input.windowMs - (now.getTime() - record.windowStartedAt.getTime()))
     : 0;
