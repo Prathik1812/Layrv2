@@ -13,45 +13,47 @@ function safeNextTarget() {
 
 function AuthShell({ eyebrow, title, description, children, footer }: { eyebrow: string; title: string; description: string; children: ReactNode; footer?: ReactNode }) {
   return (
-    <main className="grid-lines min-h-screen bg-[#0B0C0E] text-[#F4F4F2] p-4 md:p-8">
-      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-[1440px] border border-white/10 bg-[#111317] lg:grid-cols-[minmax(0,1fr)_480px]">
+    <main className="min-h-screen bg-[#050506] text-[#F4F3EF] p-4 md:p-8 antialiased">
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-[1440px] border border-white/10 bg-[#111214] lg:grid-cols-[minmax(0,1fr)_480px]">
         {/* Left Branding Panel */}
-        <section className="hidden flex-col justify-between border-r border-white/10 p-12 lg:flex bg-[#0B0C0E]">
+        <section className="hidden flex-col justify-between border-r border-white/10 p-12 lg:flex bg-[#050506]">
           <Link href="/" className="flex w-fit items-center gap-3">
-            <span className="h-5 w-5 bg-[#FF4A24] shadow-[0_0_12px_rgba(255,74,36,0.6)]" />
-            <span className="text-xl font-black tracking-[-0.07em] text-[#F4F4F2]">LAYR</span>
+            <span className="h-5 w-5 bg-[#FF4B23]" />
+            <span className="text-xl font-black tracking-[-0.07em] text-[#F4F3EF]">LAYR</span>
           </Link>
           <div>
-            <span className="ai-tag">PRIVATE DISCOVERY WORKSPACE</span>
-            <h2 className="mt-4 max-w-xl text-5xl font-black leading-[0.94] tracking-[-0.06em] text-[#F4F4F2]">
+            <span className="mono text-xs font-bold uppercase tracking-[0.22em] text-[#FF4B23] bg-[#FF4B23]/10 border border-[#FF4B23]/30 px-3 py-1 inline-block">
+              {eyebrow}
+            </span>
+            <h2 className="mt-4 max-w-xl text-5xl font-black leading-[0.94] tracking-[-0.06em] text-[#F4F3EF]">
               Reasoning that remains attached to the work.
             </h2>
-            <p className="mt-6 max-w-lg text-sm leading-7 text-[#A5A7AA]">
-              Your customer evidence, 2D sitemaps, user flows, and requirements remain strictly scoped to your private local account.
+            <p className="mt-6 max-w-lg text-sm leading-7 text-[#9B9B9B]">
+              Your customer evidence, 2D sitemaps, user flows, and requirements remain strictly scoped to your private workspace.
             </p>
           </div>
-          <div className="grid grid-cols-3 border-t border-white/10 pt-5 text-[10px] mono font-bold uppercase tracking-[0.18em] text-[#A5A7AA]">
-            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4A24]" /> Evidence</span>
-            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4A24]" /> 2D Canvas</span>
-            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4A24]" /> NN/g Audit</span>
+          <div className="grid grid-cols-3 border-t border-white/10 pt-5 text-[10px] mono font-bold uppercase tracking-[0.18em] text-[#9B9B9B]">
+            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4B23]" /> Evidence</span>
+            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4B23]" /> 2D Canvas</span>
+            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#FF4B23]" /> NN/g Audit</span>
           </div>
         </section>
 
         {/* Right Form Container */}
-        <section className="flex min-h-full flex-col p-8 md:p-14 bg-[#111317]">
+        <section className="flex min-h-full flex-col p-8 md:p-14 bg-[#0D0E11]">
           <Link href="/" className="flex w-fit items-center gap-3 lg:hidden">
-            <span className="h-5 w-5 bg-[#FF4A24]" />
-            <span className="text-xl font-black tracking-[-0.07em] text-[#F4F4F2]">LAYR</span>
+            <span className="h-5 w-5 bg-[#FF4B23]" />
+            <span className="text-xl font-black tracking-[-0.07em] text-[#F4F3EF]">LAYR</span>
           </Link>
 
           <div className="my-auto py-8">
-            <span className="ai-tag">{eyebrow}</span>
-            <h1 className="mt-3 text-4xl font-black leading-[0.94] tracking-[-0.06em] text-[#F4F4F2]">{title}</h1>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-[#A5A7AA]">{description}</p>
+            <span className="mono text-xs font-bold uppercase tracking-[0.18em] text-[#FF4B23]">{eyebrow}</span>
+            <h1 className="mt-3 text-4xl font-black leading-[0.94] tracking-[-0.06em] text-[#F4F3EF]">{title}</h1>
+            <p className="mt-4 max-w-sm text-sm leading-6 text-[#9B9B9B]">{description}</p>
             <div className="mt-8">{children}</div>
           </div>
 
-          {footer && <div className="border-t border-white/10 pt-5 text-xs leading-5 text-[#A5A7AA]">{footer}</div>}
+          {footer && <div className="border-t border-white/10 pt-5 text-xs leading-5 text-[#9B9B9B]">{footer}</div>}
         </section>
       </div>
     </main>

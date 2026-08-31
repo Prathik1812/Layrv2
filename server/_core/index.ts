@@ -79,6 +79,9 @@ async function startServer() {
   });
 }
 
-startServer().catch(err => {
-  console.error("[Layr] Startup Error:", err);
-});
+if (!process.env.VERCEL) {
+  startServer().catch(err => {
+    console.error("[Layr] Startup Error:", err);
+  });
+}
+
