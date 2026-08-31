@@ -1,7 +1,7 @@
 import { and, eq, gt, isNull } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { flowEdges, flowNodes, flows, projects, requirements, sharedReports } from "../drizzle/schema";
-import { getDb, getProjectForUser } from "./db";
+import { extractInsertId, getDb, getProjectForUser } from "./db";
 
 async function requireDb() { const db = await getDb(); if (!db) throw new Error("Database connection is unavailable."); return db; }
 
@@ -11,7 +11,7 @@ export async function createReportShare(projectId: number, userId: number, repor
   const db = await requireDb(); await getProjectForUser(projectId, userId).then(project => { if (!project) throw new Error("Project not found or access denied."); });
   const expiresAt = new Date(Date.now() + expiresInDays * 24 * 60 * 60 * 1000);
   const result = await db.insert(sharedReports).values({ projectId, userId, token: nanoid(32), reportScope, expiresAt });
-  const id = Number(result[0].insertId); return (await db.select().from(sharedReports).where(eq(sharedReports.id, id)).limit(1))[0];
+  const id = extractInsertId(result); return (await db.select().from(sharedReports).where(eq(sharedReports.id, id)).limit(1))[0];
 }
 
 export async function revokeReportShare(shareId: number, userId: number) {

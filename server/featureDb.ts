@@ -1,11 +1,11 @@
 import { and, asc, eq } from "drizzle-orm";
 import { featureCandidates, requirements } from "../drizzle/schema";
-import { getDb, getProjectForUser } from "./db";
+import { extractInsertId, getDb, getProjectForUser } from "./db";
 import type { GeneratedFeaturePipeline } from "./featureGeneration";
 
 async function requireDb() { const db = await getDb(); if (!db) throw new Error("Database connection is unavailable."); return db; }
 async function assertProject(projectId: number, userId: number) { const project = await getProjectForUser(projectId, userId); if (!project) throw new Error("Project not found or access denied."); }
-function insertId(result: unknown) { return Number((result as [{ insertId: number }])[0].insertId); }
+function insertId(result: unknown) { return extractInsertId(result); }
 
 export async function getFeaturePipeline(projectId: number, userId: number) {
   const db = await requireDb(); await assertProject(projectId, userId);

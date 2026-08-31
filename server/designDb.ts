@@ -2,7 +2,7 @@ import { and, asc, eq } from "drizzle-orm";
 import ELK from "elkjs/lib/elk.bundled.js";
 import { flowEdges, flowNodes, flows, gapFlags, iaEdges, iaNodes, storyboardPanels } from "../drizzle/schema";
 import type { GeneratedDesign } from "./designGeneration";
-import { getDb, getProjectForUser } from "./db";
+import { extractInsertId, getDb, getProjectForUser } from "./db";
 
 const elk = new ELK();
 
@@ -29,7 +29,7 @@ async function assertProject(projectId: number, userId: number) {
 }
 
 function insertId(result: unknown) {
-  return Number((result as unknown as [{ insertId: number }])[0].insertId);
+  return extractInsertId(result);
 }
 
 export async function getProjectDesign(projectId: number, userId: number) {

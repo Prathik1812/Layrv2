@@ -176,6 +176,17 @@ export async function consumeAuthRateLimit(input: { bucket: string; keyHash: str
   return { allowed: retryAfterMs === 0, retryAfterMs };
 }
 
+export function extractInsertId(result: any): number {
+  if (!result) return 0;
+  if (Array.isArray(result) && result[0]) {
+    return Number(result[0].insertId ?? result[0].id ?? 0);
+  }
+  if (typeof result === "object") {
+    return Number(result.insertId ?? result.id ?? 0);
+  }
+  return 0;
+}
+
 export async function createLocalUser(input: { openId: string; email: string; name: string | null; passwordHash: string }) {
   const db = await requireDb();
   const existing = await getLocalCredentialByEmail(input.email);
@@ -189,7 +200,11 @@ export async function createLocalUser(input: { openId: string; email: string; na
     role: "user",
     lastSignedIn: new Date(),
   });
-  const userId = Number(userResult[0].insertId);
+  let userId = extractInsertId(userResult);
+  if (!userId) {
+    const fetched = await getUserByOpenId(input.openId);
+    userId = fetched?.id ?? 0;
+  }
   await db.insert(localCredentials).values({ userId, email: input.email, passwordHash: input.passwordHash });
   return getUserById(userId);
 }
@@ -298,7 +313,7 @@ export async function getProjectForUser(projectId: number, userId: number) {
 export async function createProjectForUser(userId: number, name: string, description?: string) {
   const db = await requireDb();
   const result = await db.insert(projects).values({ userId, name, description: description || null });
-  const id = Number(result[0].insertId);
+  const id = extractInsertId(result);
   return getProjectForUser(id, userId);
 }
 
@@ -332,7 +347,7 @@ export async function createEvidenceForUser(input: {
   const db = await requireDb();
   await requireProjectOwnership(input.projectId, input.userId);
   const result = await db.insert(evidenceItems).values(input);
-  const id = Number(result[0].insertId);
+  const id = extractInsertId(result);
   const record = await db.select().from(evidenceItems).where(and(eq(evidenceItems.id, id), eq(evidenceItems.userId, input.userId))).limit(1);
   return record[0];
 }
@@ -373,7 +388,7 @@ export async function addAttachmentForUser(input: {
   const db = await requireDb();
   await requireEvidenceOwnership(input.evidenceId, input.userId);
   const result = await db.insert(evidenceAttachments).values(input);
-  const id = Number(result[0].insertId);
+  const id = extractInsertId(result);
   const record = await db.select().from(evidenceAttachments).where(and(eq(evidenceAttachments.id, id), eq(evidenceAttachments.userId, input.userId))).limit(1);
   return record[0];
 }
@@ -397,7 +412,7 @@ export async function createSynthesisForUser(input: { projectId: number; userId:
   const db = await requireDb();
   await requireProjectOwnership(input.projectId, input.userId);
   const result = await db.insert(generatedOutputs).values({ ...input, outputType: "synthesis" });
-  const id = Number(result[0].insertId);
+  const id = extractInsertId(result);
   const output = await db.select().from(generatedOutputs).where(and(eq(generatedOutputs.id, id), eq(generatedOutputs.userId, input.userId))).limit(1);
   return output[0];
 }
@@ -415,7 +430,7 @@ export async function createWorkflowOutputForUser(input: {
     evidenceIds: [],
     content: { summary: input.summary },
   });
-  const id = Number(result[0].insertId);
+  const id = extractInsertId(result);
   const output = await db.select().from(generatedOutputs)
     .where(and(eq(generatedOutputs.id, id), eq(generatedOutputs.userId, input.userId))).limit(1);
   return output[0];
