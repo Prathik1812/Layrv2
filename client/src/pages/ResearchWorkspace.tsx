@@ -728,14 +728,16 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
   if (evidenceQuery.error || outputsQuery.error) return <StageError title="Research synthesis could not load." onRetry={() => { evidenceQuery.refetch(); outputsQuery.refetch(); }} />;
 
   return (
-    <section className="grid min-h-[calc(100vh-4rem)] xl:grid-cols-[360px_minmax(0,1fr)]">
-      <aside className="border-b border-[#222536] bg-[#0d0e16] p-6 xl:border-b-0 xl:border-r">
-        <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#ff4d00]">SYNTHESIS INPUT</p>
-        <h2 className="mt-1.5 text-2xl font-extrabold tracking-[-0.055em] text-white">Evidence Selection</h2>
-        <p className="mt-3 text-xs leading-5 text-[#94a3b8]">Choose evidence items to analyze with NVIDIA NIM LLM inference into findings, opportunities, and open questions.</p>
+    <section className="grid min-h-[calc(100vh-4rem)] xl:grid-cols-[360px_minmax(0,1fr)] bg-[#050506]">
+      <aside className="border-b border-white/10 bg-[#0D0E11] p-6 xl:border-b-0 xl:border-r">
+        <span className="mono text-xs font-bold uppercase tracking-[0.18em] text-[#FF4B23] bg-[#FF4B23]/10 border border-[#FF4B23]/30 px-2.5 py-1 inline-block">
+          SYNTHESIS INPUT
+        </span>
+        <h2 className="mt-2.5 text-2xl font-black tracking-[-0.05em] text-[#F4F3EF]">Evidence Selection</h2>
+        <p className="mt-3 text-xs leading-5 text-[#9B9B9B]">Choose evidence items to analyze with NVIDIA NIM LLM inference into findings, opportunities, and open questions.</p>
         <div className="mt-6 space-y-1.5 max-h-96 overflow-y-auto research-scroll">
           {evidence.map(item => (
-            <label key={item.id} className="flex cursor-pointer items-start gap-3 border-b border-[#222536] py-3 hover:bg-[#12131c] px-2 transition-colors">
+            <label key={item.id} className="flex cursor-pointer items-start gap-3 border-b border-white/10 py-3 hover:bg-[#111214] px-2 transition-colors">
               <input
                 type="checkbox"
                 checked={selected.has(item.id)}
@@ -746,11 +748,11 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
                     return next;
                   })
                 }
-                className="mt-0.5 h-4 w-4 accent-[#ff4d00]"
+                className="mt-0.5 h-4 w-4 accent-[#FF4B23]"
               />
               <span>
-                <span className="block text-xs font-bold text-white">{item.title}</span>
-                <span className="mono block pt-1 text-[9px] uppercase tracking-[0.11em] text-[#ff4d00]">{item.sourceType}</span>
+                <span className="block text-xs font-bold text-[#F4F3EF]">{item.title}</span>
+                <span className="mono block pt-1 text-[9px] uppercase tracking-[0.11em] text-[#FF4B23]">{item.sourceType}</span>
               </span>
             </label>
           ))}
@@ -758,7 +760,7 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
         <Button
           disabled={!selected.size || generate.isPending}
           onClick={() => generate.mutate({ projectId, evidenceIds: Array.from(selected) })}
-          className="mt-6 w-full rounded-none bg-[#ff4d00] py-6 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-white hover:text-black transition-all shadow-[0_0_15px_rgba(255,77,0,0.4)]"
+          className="mt-6 w-full h-12 bg-[#FF4B23] text-xs font-bold uppercase tracking-[0.14em] text-[#050506] hover:bg-white transition-all shadow-[0_0_15px_rgba(255,75,35,0.4)]"
         >
           {generate.isPending ? (
             <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Synthesizing with NVIDIA NIM</>
@@ -768,15 +770,17 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
         </Button>
       </aside>
 
-      <div className="research-scroll max-h-[calc(100vh-4rem)] overflow-auto p-6 md:p-8">
-        <div className="flex items-end justify-between border-b border-[#222536] pb-5">
+      <div className="research-scroll max-h-[calc(100vh-4rem)] overflow-auto p-6 md:p-8 bg-[#050506]">
+        <div className="flex items-end justify-between border-b border-white/10 pb-5">
           <div>
-            <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#ff4d00]">PERSISTENT SYNTHESIS / {String(outputs.length).padStart(2, "0")}</p>
-            <h2 className="mt-1.5 text-3xl font-extrabold tracking-[-0.065em] text-white">Research Synthesis Reports</h2>
+            <span className="mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#FF4B23]">
+              PERSISTENT SYNTHESIS / {String(outputs.length).padStart(2, "0")}
+            </span>
+            <h2 className="mt-1 text-3xl font-black tracking-[-0.05em] text-[#F4F3EF]">Research Synthesis Reports</h2>
           </div>
           {outputs.length > 0 && (
-            <Button onClick={() => onNavigate("features")} variant="outline" className="rounded-none border-[#222536] bg-[#12131c] text-xs font-bold uppercase tracking-[0.1em] text-white hover:border-[#ff4d00]">
-              Advance to Features <ArrowUpRight className="ml-2 h-4 w-4" />
+            <Button onClick={() => onNavigate("features")} variant="outline" className="h-9 border-white/15 bg-[#111214] text-xs font-bold uppercase text-[#F4F3EF] hover:border-[#FF4B23]">
+              Advance to Features <ArrowUpRight className="ml-2 h-4 w-4 text-[#FF4B23]" />
             </Button>
           )}
         </div>
@@ -789,9 +793,9 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
         ) : (
           <div className="grid min-h-80 place-items-center text-center">
             <div>
-              <Sparkles className="mx-auto h-8 w-8 text-[#ff4d00]" />
-              <p className="mt-4 text-sm font-bold text-white">No Synthesis Generated Yet</p>
-              <p className="mt-2 max-w-sm text-xs text-[#94a3b8]">Select evidence items on the left to extract research findings and opportunity areas.</p>
+              <Sparkles className="mx-auto h-8 w-8 text-[#FF4B23]" />
+              <p className="mt-4 text-sm font-bold text-[#F4F3EF]">No Synthesis Generated Yet</p>
+              <p className="mt-2 max-w-sm text-xs text-[#9B9B9B]">Select evidence items on the left to extract research findings and opportunity areas.</p>
             </div>
           </div>
         )}
@@ -802,12 +806,12 @@ function InsightsStage({ projectId, onNavigate }: { projectId: number; onNavigat
 
 function SynthesisOutput({ title, content }: { title: string; content: Synthesis }) {
   return (
-    <article className="border border-[#222536] bg-[#12131c]">
-      <div className="flex items-center justify-between border-b border-[#222536] px-6 py-4">
-        <h3 className="font-extrabold tracking-[-0.035em] text-white">{title}</h3>
-        <span className="mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#ff4d00]">NVIDIA LLM Synthesized</span>
+    <article className="border border-white/10 bg-[#111214]">
+      <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+        <h3 className="font-bold tracking-[-0.035em] text-[#F4F3EF]">{title}</h3>
+        <span className="mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#FF4B23]">NVIDIA LLM Synthesized</span>
       </div>
-      <div className="grid divide-y divide-[#222536] md:grid-cols-3 md:divide-x md:divide-y-0">
+      <div className="grid divide-y divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
         <SynthesisColumn label="Key Findings">{content.findings.map((item, index) => <SynthesisEntry key={index} title={item.title} copy={item.summary} evidenceIds={item.evidenceIds} />)}</SynthesisColumn>
         <SynthesisColumn label="Opportunity Areas">{content.opportunities.map((item, index) => <SynthesisEntry key={index} title={item.title} copy={item.rationale} evidenceIds={item.evidenceIds} />)}</SynthesisColumn>
         <SynthesisColumn label="Unresolved Questions">{content.unresolvedQuestions.map((item, index) => <SynthesisEntry key={index} title={item.question} copy={item.context} evidenceIds={item.evidenceIds} />)}</SynthesisColumn>
@@ -819,7 +823,7 @@ function SynthesisOutput({ title, content }: { title: string; content: Synthesis
 function SynthesisColumn({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="p-6">
-      <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#ff4d00]">{label}</p>
+      <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF4B23]">{label}</p>
       <div className="mt-4 space-y-4">{children}</div>
     </div>
   );
@@ -828,9 +832,9 @@ function SynthesisColumn({ label, children }: { label: string; children: React.R
 function SynthesisEntry({ title, copy, evidenceIds }: { title: string; copy: string; evidenceIds: number[] }) {
   return (
     <div>
-      <p className="text-sm font-bold text-white leading-5">{title}</p>
-      <p className="mt-1.5 text-xs leading-5 text-[#94a3b8]">{copy}</p>
-      <p className="mono mt-2 text-[9px] font-bold uppercase tracking-[0.1em] text-[#ff4d00]">Evidence IDs: {evidenceIds.join(", ") || "–"}</p>
+      <p className="text-sm font-bold text-[#F4F3EF] leading-5">{title}</p>
+      <p className="mt-1.5 text-xs leading-5 text-[#9B9B9B]">{copy}</p>
+      <p className="mono mt-2 text-[9px] font-bold uppercase tracking-[0.1em] text-[#FF4B23]">Evidence IDs: {evidenceIds.join(", ") || "–"}</p>
     </div>
   );
 }
@@ -862,24 +866,24 @@ function FeaturesStage({ projectId, onNavigate }: { projectId: number; onNavigat
   const selectedCount = features.filter(f => f.selected === 1).length;
 
   return (
-    <section className="research-scroll min-h-[calc(100vh-4rem)] p-6 md:p-8">
-      <div className="flex flex-col justify-between gap-4 border-b border-[#222536] pb-5 md:flex-row md:items-end">
+    <section className="research-scroll min-h-[calc(100vh-4rem)] p-6 md:p-8 bg-[#050506]">
+      <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-5 md:flex-row md:items-end">
         <div>
-          <p className="mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#ff4d00]">UX STRATEGY & SCOPE</p>
-          <h2 className="mt-1.5 text-3xl font-extrabold tracking-[-0.065em] text-white">Feature Candidates & Prioritization</h2>
-          <p className="mt-2 max-w-2xl text-xs leading-5 text-[#94a3b8]">Select features backed by evidence to advance into requirements.</p>
+          <span className="mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#FF4B23]">UX STRATEGY & SCOPE</span>
+          <h2 className="mt-1.5 text-3xl font-black tracking-[-0.05em] text-[#F4F3EF]">Feature Candidates & Prioritization</h2>
+          <p className="mt-2 max-w-2xl text-xs leading-5 text-[#9B9B9B]">Select features backed by evidence to advance into requirements.</p>
         </div>
         <div className="flex gap-2">
           <Button
             onClick={() => generate.mutate({ projectId })}
             disabled={generate.isPending}
-            className="rounded-none bg-[#ff4d00] text-xs font-bold uppercase tracking-[0.12em] text-white hover:bg-white hover:text-black transition-all shadow-[0_0_15px_rgba(255,77,0,0.4)]"
+            className="h-10 bg-[#FF4B23] text-xs font-bold uppercase tracking-[0.12em] text-[#050506] hover:bg-white transition-all shadow-[0_0_15px_rgba(255,75,35,0.4)]"
           >
             {generate.isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Cluster Features</> : <><Sparkles className="mr-2 h-4 w-4" /> Cluster Features</>}
           </Button>
           {features.length > 0 && (
-            <Button onClick={() => onNavigate("requirements")} variant="outline" className="rounded-none border-[#222536] bg-[#12131c] text-xs font-bold uppercase tracking-[0.1em] text-white hover:border-[#ff4d00]">
-              Requirements <ArrowUpRight className="ml-2 h-4 w-4" />
+            <Button onClick={() => onNavigate("requirements")} variant="outline" className="h-10 border-white/15 bg-[#111214] text-xs font-bold uppercase text-[#F4F3EF] hover:border-[#FF4B23]">
+              Requirements <ArrowUpRight className="ml-2 h-4 w-4 text-[#FF4B23]" />
             </Button>
           )}
         </div>
