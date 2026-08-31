@@ -1,0 +1,62 @@
+# Project TODO
+
+- [x] Establish the signed-in, user-scoped project and evidence persistence model.
+- [x] Add secure tRPC operations for project creation, evidence CRUD, attachments, and synthesis outputs.
+- [x] Add S3-backed source attachment upload and metadata persistence for evidence records.
+- [x] Build the International Typographic Style desktop research workspace shell with persistent project navigation.
+- [x] Implement the searchable, filterable Evidence library with cards, detailed inspection, editing, and deletion.
+- [x] Implement AI-assisted selected-evidence synthesis for findings, opportunities, and unresolved questions.
+- [x] Add project-scoped persistence and useful working views for Flows and Ship outputs.
+- [x] Complete accessible query and mutation error states across the research workflow.
+- [x] Write Vitest coverage for critical user-scoped project and evidence behaviors.
+- [x] Validate the responsive desktop-first interface and run automated checks before saving a complete project checkpoint.
+- [x] Diagnose the OAuth callback failure shown after account selection as an upstream token-exchange rejection; the provider configuration still requires external repair.
+- [x] Provide and verify a development-only preview account for workspace access while the external callback is unavailable.
+- [x] Add and verify a development-only preview account that bypasses the unavailable OAuth callback without affecting production.
+- [x] Verify preview-mode access to protected project and evidence procedures end to end.
+- [x] Add automated coverage for preview-mode access to protected workspace data through the real preview-auth context path.
+- [x] Add evidence-traceable IA nodes and typed navigation edges to the persistence model.
+- [x] Add evidence-derived flow nodes, conditional edges, and persistent manual canvas positions.
+- [x] Add AI generation contracts that produce IA and branching flows directly from each project’s evidence.
+- [x] Add React Flow and ELK-based interactive 2D canvas views with custom nodes, minimaps, controls, and detail panels.
+- [x] Add an AI-generated storyboard panel sequence linked to generated flow steps.
+- [x] Add cross-stage gap analysis for unused evidence, weakly supported work, missing error paths, and traceability gaps.
+- [x] Replace the temporary Flow and Ship workspace notes with the requested IA, User Flows, and Review workflow.
+- [x] Add persistent evidence-backed feature candidates with selection controls.
+- [x] Add persistent editable requirements with problem statements, user stories, and acceptance criteria.
+- [x] Add Feature and Requirements navigation stages before IA generation.
+- [x] Add deterministic weak-traceability flags and targeted test coverage for weakly supported design artifacts.
+- [x] Add explicit weak-traceability tests for IA nodes, flows, and storyboard panels.
+- [x] Add a tested review-link mapping for persisted gap flags.
+- [x] Fix conditional-hook rendering errors in the IA and Flow canvas stages.
+- [x] Refine the proof flow canvas so branching paths fill the drafting surface at a readable scale.
+- [x] Add expandable storyboard panels with evidence and flow-step details.
+- [x] Extract text from uploaded PDF evidence files before persisting their research content.
+- [x] Export generated user flows and selected requirements as downloadable PDF and CSV reports.
+- [x] Verify evidence-driven user-flow generation through the router, persistence, and an explicitly inspected Flow-stage render.
+- [x] Add router-level regression coverage for malformed AI flow-generation output without partial persistence.
+- [x] Add UI-facing coverage that persisted generated flow records map to non-empty canvas data.
+- [x] Diagnose and fix IA and flow node movement persistence after dragging.
+- [x] Repair collapsed persisted positions so existing generated flow graphs render in full.
+- [x] Add user-scoped shareable read-only links for generated flow and requirements reports.
+- [x] Add a standalone read-only shared-report route with expiry and revocation support.
+- [x] Add descriptive visual thumbnails to storyboard panels without fabricating user-generated content.
+- [x] Extract text from DOCX evidence uploads alongside existing PDF extraction.
+- [x] Add regression coverage for shared report access and DOCX extraction helpers.
+- [x] Add create, public read-only, revocation, and expiry route tests for shared reports.
+- [x] Add secure local email/password credential storage and password-reset tokens.
+- [x] Add custom sign-up, sign-in, forgot-password, and reset-password procedures.
+- [x] Add custom branded authentication pages and protected workspace redirects.
+- [x] Add transactional password-reset delivery or a secure development reset preview path.
+- [x] Add authentication security and recovery-flow regression tests.
+- [x] Add persistent sign-in failure tracking, request throttling, and temporary account lockouts.
+- [x] Add secure email-verification tokens and verified-account persistence.
+- [x] Gate custom-auth workspace access until a user verifies their email address.
+- [x] Add branded verification and resend-verification interfaces with a development-only link preview.
+- [x] Add automated tests for throttling, lockout, verification, and verified workspace access.
+- [x] Add protected-route regression coverage for rejected unverified local sessions and accepted verified local sessions.
+- [ ] Connect password-reset token creation to transactional email delivery with secure absolute links.
+- [ ] Preserve generic recovery responses, development preview behavior, and single-use reset completion.
+- [ ] Add automated coverage for reset-email delivery, failure handling, and link safety.
+- [ ] Validate and checkpoint the production-ready self-service reset flow.
+- [ ] Prepare a clean downloadable Layr source ZIP and audit implemented versus deferred features.

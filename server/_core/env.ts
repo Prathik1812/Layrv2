@@ -1,0 +1,16 @@
+export const ENV = {
+  appId: process.env.VITE_APP_ID ?? "",
+  cookieSecret: process.env.JWT_SECRET ?? process.env.COOKIE_SECRET ?? "layr_default_secret_key_change_in_production_min32chars",
+  databaseUrl: process.env.DATABASE_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.SUPABASE_DB_URL ?? "postgresql://postgres:%40Layr%40310826@db.luihibqcuctdscjoqxxb.supabase.co:5432/postgres",
+  supabaseUrl: process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL ?? "https://luihibqcuctdscjoqxxb.supabase.co",
+  supabaseAnonKey: process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1aWhpYnFjdWN0ZHNjam9xeHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNjUyMjIsImV4cCI6MjEwMzc0MTIyMn0.lCx0brXDqgbDL-_1RsVVyQEGdgUPTBRtPt7u1aC9VyU",
+  supabaseServiceKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
+  oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
+  ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
+  isProduction: process.env.NODE_ENV === "production",
+  forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
+  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  nvidiaApiKey: process.env.NVIDIA_API_KEY ?? process.env.NVIDIA_NIM_API_KEY ?? "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",
+  nvidiaApiUrl: process.env.NVIDIA_API_URL ?? "https://integrate.api.nvidia.com/v1",
+  llmModel: process.env.LLM_MODEL ?? "nvidia/nemotron-3.5-lightning-30b-a3b",
+};
